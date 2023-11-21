@@ -2,9 +2,9 @@ import os
 from flask import Flask, jsonify, request
 import os
 from openai import AzureOpenAI
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\\Users\\Hasan\\OneDrive\\Desktop\\estrats\\workvenv\\Chatbot_integration\\settings.env") 
+#load_dotenv(dotenv_path=r"C:\\Users\\Hasan\\OneDrive\\Desktop\\estrats\\workvenv\\Chatbot_integration\\settings.env") 
 
 app = Flask(__name__)
 
