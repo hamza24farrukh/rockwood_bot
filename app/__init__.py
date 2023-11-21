@@ -187,7 +187,7 @@ def get_ai_response():
     messages.append({"role" : "user", "content" : user_prompt})
 
     # Send a subset of messages within the token limit
-    max_tokens = 500  # Define the maximum token limit
+    max_tokens = 1000  # Define the maximum token limit
 
     # for message in history:
     #     if message["role"] == "User":
