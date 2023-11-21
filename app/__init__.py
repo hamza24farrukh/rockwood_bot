@@ -11,12 +11,12 @@ app = Flask(__name__)
 # Load OpenAI secret key from an environment variable 
 
 client = AzureOpenAI(
-  azure_endpoint = os.getenv("AZURE_OPENAI_BASEURL"), 
-  api_key=os.getenv("AZURE_OPENAI_APIKEY"),  
+  azure_endpoint = os.environ.get("AZURE_OPENAI_BASEURL"), 
+  api_key=os.environ.get("AZURE_OPENAI_APIKEY"),  
   api_version="2023-05-15"
 )
 
-openai_deployment = os.getenv("AZURE_OPENAI_CHATGPT_DEPLOYMENT")
+openai_deployment = os.environ.get("AZURE_OPENAI_CHATGPT_DEPLOYMENT")
 history = []
 
 @app.route('/bot/chat', methods=['POST'])
