@@ -28,10 +28,7 @@ def get_ai_response():
     # Combine the user's history and the current prompt
     #full_prompt = '\n'.join(user_history) + '\n' + user_prompt
 
-    history.append({"role":"User", "content":user_prompt})
-
-    # Prepare the messages for the API
-    messages = [{"role": "system", "content": """You are a helpful assistant of the summerhouse/hotel named rockwood heights. answer the user questions from the info below.
+    system_message = """You are a helpful assistant of the summerhouse/hotel named rockwood heights. answer the user questions from the info below.
               Try to be concise and give short answers. if the question is anything beside the hotel or its services then say i dont know. do not use the name or word assistant in your responses.
 
               if the user asks for pictures of the rooms or bathroom etc, return only the appropriate link from the info below. do not include any other text or words with the link/url. also take the name of the apprpriate image from inside the link e.g. in the link https://stoxb2qmiiznlsa.blob.core.windows.net/content-test-images/Balcony and sitting place.png, the text after the base url https://stoxb2qmiiznlsa.blob.core.windows.net/content-test-images/ is the description of the image in the link which in this case is Balcony and sitting place.
@@ -178,27 +175,48 @@ def get_ai_response():
               11. is there alcohol allowed ?
               no its forbidden on the premises
 
-              """}]
-    for message in history:
-        if message["role"] == "User":
-          messages.append({"role": "user", "content": message["content"]})
-        else:
-          messages.append({"role": "assistant", "content": message["content"]})
-    messages.append({"role": "user", "content": user_prompt})
+              """
+
+    # Initialize messages list with the system message and user's prompt
+    messages = [{"role": "system", "content": system_message}]
+
+    # Filter and append relevant messages to the list
+    filtered_messages = [message for message in history if message["role"] == "assistant" or message["role"] == "user"]
+    messages.extend(filtered_messages[-15:])  # Limiting to the last user and assistant messages
+
+    messages.append({"role" : "user", "content" : user_prompt})
+
+    # Send a subset of messages within the token limit
+    max_tokens = 500  # Define the maximum token limit
+
+    # for message in history:
+    #     if message["role"] == "User":
+    #       messages.append({"role": "user", "content": message["content"]})
+    #     else:
+    #       messages.append({"role": "assistant", "content": message["content"]})
+    # messages.append({"role": "user", "content": user_prompt})
 
     # Send the messages to the OpenAI API
     response = client.chat.completions.create(
     model="ChatGpt35Latest",
     messages=messages,
-    max_tokens=100
+    max_tokens=max_tokens
 )
 
     # Extract the generated text from the response
-    ai_text = response.choices[0].message.content.replace('\n','')
+    ai_text = response.choices[0].message.content.replace('\n', '')
 
-    history.append({"role":"Assistant", "content" : ai_text})
+    # Update message history with user's prompt
+    history.append({"role": "user", "content": user_prompt})
 
-    print("#################################################")
+    # Update the history with the AI response
+    history.append({"role": "assistant", "content": ai_text})
+
+    # Update messages list with the AI response
+    messages.append({"role": "assistant", "content": ai_text})
+
+    # Print messages with user's prompt always last and system message always first
+    print("#########################################################################")
     print(messages)
 
     return jsonify({'ai_text': ai_text})
