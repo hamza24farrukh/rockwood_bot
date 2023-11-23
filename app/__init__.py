@@ -140,7 +140,7 @@ def get_ai_response():
                Free car parking
                Balcony
                Terrace
-               Pets allowed
+               No Pets allowed
                Outdoor area with BBQ grill & spacious lawn
                Free High-Speed Internet
                Table tennis & foosball
