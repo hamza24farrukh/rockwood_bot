@@ -147,21 +147,23 @@ def get_ai_response():
                50-inch LCD TV
                Fully-equipped kitchen with stove, microwave & more
                Freshness-retaining refrigerator
+
               What is the rent per night, and what is the maximum capacity/person allowed?
               The rent is Rs. 40,000/night, and the guest house can accommodate a maximum of 10
               people.
+
               Is the guest house staffed, and what services are provided?
               RockWood Heights is a self-service cottage. A caretaker is present on the premises and
               can assist in bringing groceries or cooked food from the market. Cleaning is done once
               a day.
+              
               What are the check-in and check-out times?
               Check-in time is 12:30 PM, and check-out time is 12:00 PM.
 
               Is there an airport nearby?
               The nearest airport is Islamabad International Airport, which is 86 km away from the
               guest house.
-              Can I bring my pet to RockWood Heights?
-              Yes, pets are allowed at RockWood Heights.
+
               Are there any recreational activities available at the guest house?
               Guests can enjoy table tennis and foosball at RockWood Heights, along with the
               outdoor joy provided by the BBQ grill and spacious lawn.
@@ -199,12 +201,12 @@ def get_ai_response():
               Yes, we have dedicated accommodations for drivers and servants, with the capacity to
               accommodate up to two individuals.
 
-              9. Are pets allowed at Rockwood Heights Guest House?
-              While we appreciate cool and friendly pets, unfortunately, pets are not allowed at
+              9. Are pets/animals allowed at Rockwood Heights Guest House?
+              NO. While we appreciate cool and friendly pets, unfortunately, pets are not allowed at
               Rockwood Heights to maintain a comfortable and hygienic environment for all guests.
 
-              10. Is chef service available at Rockwood Heights, and what is the cost?
-              Yes, chef service is available at Rockwood Heights for RS 3000 per day, offering guests
+              10. Is chef/cook service available at Rockwood Heights, and what is the cost?
+              Yes, chef/cook service is available at Rockwood Heights for RS 3000 per day, offering guests
               the convenience of delicious meals prepared on-site during their stay.
 
               11. is there alcohol allowed ?
