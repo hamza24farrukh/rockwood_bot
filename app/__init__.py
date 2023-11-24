@@ -2,6 +2,8 @@ import os
 from flask import Flask, jsonify, request
 import os
 from openai import AzureOpenAI
+# from langchain.utilities import OpenWeatherMapAPIWrapper
+
 #from dotenv import load_dotenv
 
 #load_dotenv(dotenv_path=r"C:\\Users\\Hasan\\OneDrive\\Desktop\\estrats\\workvenv\\Chatbot_integration\\settings.env") 
@@ -19,6 +21,15 @@ client = AzureOpenAI(
 openai_deployment = os.environ.get("AZURE_OPENAI_CHATGPT_DEPLOYMENT")
 history = []
 
+# def GetWeatherData():
+#   os.environ["OPENWEATHERMAP_API_KEY"] = "74a2995386825c5bd429bab56d7bfdf4"
+
+#   weather = OpenWeatherMapAPIWrapper()
+
+#   weather_data = weather.run("khaira gali, pakistan")
+#   print(weather_data)
+#   return weather_data
+
 @app.route('/bot/chat', methods=['POST'])
 def get_ai_response():
     data = request.get_json()
@@ -33,7 +44,7 @@ def get_ai_response():
               When youre replying in Urdu and the user asks for the images, reply with links in english.
 
 
-              if the user asks for pictures of the rooms or bathroom etc, return only the appropriate link from the info below. do not include any other text or words with the link/url. also take the name of the appropriate image from inside the link. if you cannot provide the 
+              if the user asks for pictures/images of the rooms or bathroom etc or asks you to send images/clicks/pics, return only the appropriate link from the info below. do not include any other text or words with the link/url. also take the name of the appropriate image from inside the link. if you cannot provide the 
               image then ask them to ask againa dn rephrase thier query or question.
 
               For Room Images:
