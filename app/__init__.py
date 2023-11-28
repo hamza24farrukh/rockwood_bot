@@ -138,12 +138,16 @@ def get_ai_response():
               FAQ:
               Where is RockWood Heights located?
               RockWood Heights is situated in Khaira Gali, Street one, Murree, Pakistan.
+              
               Google Map/pin location
               https://maps.app.goo.gl/TWFeeSwt4zUGcNA96
+
               What are the contact details for reservations?
               You can contact us at 0335 3362277 for reservations and inquiries.
+
               How many bedrooms does RockWood Heights have?
               RockWood Heights has a 4-bedroom, 2-story furnished cottage with valley views.
+
               What facilities are available in the guest house?
               The guest house offers:
                4 bedrooms with attached baths
@@ -161,7 +165,7 @@ def get_ai_response():
 
               What is the rent per night, and what is the maximum capacity/person allowed?
               The rent is Rs. 40,000/night, and the guest house can accommodate a maximum of 10
-              people.
+              people. Also there is no room charges separately, only the booking of the whole cottage is allowed no matter how many rooms you want.
 
               Is the guest house staffed, and what services are provided?
               RockWood Heights is a self-service cottage. A caretaker is present on the premises and
@@ -252,7 +256,7 @@ def get_ai_response():
 )
 
     # Extract the generated text from the response
-    ai_text = response.choices[0].message.content.replace('\n', '')
+    ai_text = response.choices[0].message.content.replace('\n', '\n')
 
     # Update message history with user's prompt
     history.append({"role": "user", "content": user_prompt})
