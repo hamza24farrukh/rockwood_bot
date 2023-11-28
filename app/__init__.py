@@ -238,7 +238,7 @@ def get_ai_response():
 
     # Filter and append relevant messages to the list
     filtered_messages = [message for message in history if message["role"] == "assistant" or message["role"] == "user"]
-    messages.extend(filtered_messages[-5:])  # Limiting to the last user and assistant messages
+    messages.extend(filtered_messages[-3:])  # Limiting to the last user and assistant messages
 
     messages.append({"role" : "user", "content" : user_prompt})
 
