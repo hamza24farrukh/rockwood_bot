@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, request
 import os
 from openai import AzureOpenAI
-# from langchain.utilities import OpenWeatherMapAPIWrapper
+from langchain.utilities import OpenWeatherMapAPIWrapper
 
 #from dotenv import load_dotenv
 
@@ -21,25 +21,26 @@ client = AzureOpenAI(
 openai_deployment = os.environ.get("AZURE_OPENAI_CHATGPT_DEPLOYMENT")
 history = []
 
-# def GetWeatherData():
-#   os.environ["OPENWEATHERMAP_API_KEY"] = "74a2995386825c5bd429bab56d7bfdf4"
+def GetWeatherData():
+  os.environ["OPENWEATHERMAP_API_KEY"] = "74a2995386825c5bd429bab56d7bfdf4"
 
-#   weather = OpenWeatherMapAPIWrapper()
+  weather = OpenWeatherMapAPIWrapper()
 
-#   weather_data = weather.run("khaira gali, pakistan")
-#   print(weather_data)
-#   return weather_data
+  weather_data = weather.run("khaira gali, pakistan")
+  print(weather_data)
+  return weather_data
 
 @app.route('/bot/chat', methods=['POST'])
 def get_ai_response():
     data = request.get_json()
     user_prompt = data.get('prompt', '')
+    current_weather = GetWeatherData()
     #user_history = data.get('history', [])
 
     # Combine the user's history and the current prompt
     #full_prompt = '\n'.join(user_history) + '\n' + user_prompt
 
-    system_message = """You are a helpful assistant named rocky of the summerhouse/hotel named rockwood heights. answer the user questions from the info below.
+    system_message = f"""You are a helpful assistant named rocky of the summerhouse/hotel named rockwood heights. answer the user questions from the info below.
               Try to be concise and give short answers. if the question is anything beside the hotel or its services then say i dont know. do not use the name or word assistant in your responses. Do not use any other language other than English or Urdu.
               When youre replying in Urdu and the user asks for the images, reply with links in english.
 
@@ -112,6 +113,9 @@ def get_ai_response():
               Location/address: Street one, Khairagali, Murree, Pakistan
               Contact: 0335 3362277
 
+              Below is the weather info, when asked about weather, please return a creative response which is also concise and to the point:
+              {current_weather}
+
               Facilities:
               1. 4 bedrooms with attached bath
               2. Big lounge
@@ -138,7 +142,7 @@ def get_ai_response():
               FAQ:
               Where is RockWood Heights located?
               RockWood Heights is situated in Khaira Gali, Street one, Murree, Pakistan.
-              
+
               Google Map/pin location
               https://maps.app.goo.gl/TWFeeSwt4zUGcNA96
 
