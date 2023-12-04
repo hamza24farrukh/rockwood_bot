@@ -273,7 +273,9 @@ def get_ai_response():
 )
 
     # Extract the generated text from the response
-    ai_text = response.choices[0].message.content.replace('\n', '\n')
+    
+    # ai_text = response.choices[0].message.content.replace('\n', '\n')
+    ai_text = response.choices[0].message.content
 
     # Update message history with user's prompt
     history.append({"role": "user", "content": rephrased_query})
