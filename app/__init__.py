@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 import os
 from openai import AzureOpenAI
 from langchain.utilities import OpenWeatherMapAPIWrapper
+from Helper.query_handler import QueryHandler
 
 #from dotenv import load_dotenv
 
@@ -30,22 +31,34 @@ def GetWeatherData():
   print(weather_data)
   return weather_data
 
+# todo
+@app.route('/bot/uploadimages', methods=['POST'])
+def upload_images_blobs():
+   return True
+
 @app.route('/bot/chat', methods=['POST'])
 def get_ai_response():
     data = request.get_json()
     user_prompt = data.get('prompt', '')
     current_weather = GetWeatherData()
+
     #user_history = data.get('history', [])
 
     # Combine the user's history and the current prompt
     #full_prompt = '\n'.join(user_history) + '\n' + user_prompt
 
-    system_message = f"""You are a helpful assistant named rocky of the summerhouse/hotel named rockwood heights. answer the user questions from the info below.
-              Try to be concise and give short answers. if the question is anything beside the hotel or its services then say i dont know. do not use the name or word assistant in your responses. Do not use any other language other than English or Urdu.
+    # rewrite the query before reading
+    handler = QueryHandler(client)
+    rephrased_query = handler.rephrase_query(user_prompt)
+    print(rephrased_query)
+
+
+    system_message = f"""You are a helpful assistant named rocky of the summerhouse/hotel named rockwood heights. Answer the user questions from the info below.
+              Try to be concise and give short answers. If the question is anything beside the hotel or its services then say i dont know. Do not use the name or word assistant in your responses. Do not use any other language other than English or Urdu.
               When youre replying in Urdu and the user asks for the images, reply with links in english.
 
 
-              if the user asks for pictures/images of the rooms or bathroom etc or asks you to send images/clicks/pics, return only the appropriate link from the info below. do not include any other text or words with the link/url. also take the name of the appropriate image from inside the link. if you cannot provide the 
+              If the user asks for pictures/images of the rooms or bathroom etc or asks you to send images/clicks/pics, return only the appropriate link from the info below. do not include any other text or words with the link/url. also take the name of the appropriate image from inside the link. if you cannot provide the 
               image then ask them to ask againa dn rephrase thier query or question.
 
               For Room Images:
@@ -240,7 +253,7 @@ def get_ai_response():
     filtered_messages = [message for message in history if message["role"] == "assistant" or message["role"] == "user"]
     messages.extend(filtered_messages[-3:])  # Limiting to the last user and assistant messages
 
-    messages.append({"role" : "user", "content" : user_prompt})
+    messages.append({"role" : "user", "content" : rephrased_query})
 
     # Send a subset of messages within the token limit
     max_tokens = 1000  # Define the maximum token limit
@@ -263,7 +276,7 @@ def get_ai_response():
     ai_text = response.choices[0].message.content.replace('\n', '\n')
 
     # Update message history with user's prompt
-    history.append({"role": "user", "content": user_prompt})
+    history.append({"role": "user", "content": rephrased_query})
 
     # Update the history with the AI response
     history.append({"role": "assistant", "content": ai_text})
