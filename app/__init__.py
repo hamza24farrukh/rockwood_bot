@@ -48,8 +48,9 @@ def get_ai_response():
     #full_prompt = '\n'.join(user_history) + '\n' + user_prompt
 
     # rewrite the query before reading
-    handler = QueryHandler(client)
-    rephrased_query = handler.rephrase_query(user_prompt)
+    #handler = QueryHandler(client)
+    #rephrased_query = handler.rephrase_query(user_prompt)
+    rephrased_query = user_prompt
     print(rephrased_query)
 
 
